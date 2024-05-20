@@ -60,6 +60,20 @@ function verify(){
             return true;
         }
     }
+
+    return false;
+}
+
+function tie(){
+    let empty_squares = 9;
+    for(let i = 0; i < 9; i++){
+        if(buttons[i].text != ''){
+            empty_squares--;
+        }
+    }
+    if(empty_squares === 0){
+        return true;
+    }
     return false;
 }
 
@@ -92,6 +106,8 @@ canvas.addEventListener('click', (e) => {
         } else {
             gameWon.textContent = 'Player 2 won! Please reload page to play again.';
         }
-        
+    } else if(tie()){
+        gameWon.style.left = '625px';
+        gameWon.textContent = 'Tie. Please reload page to play again.';
     }
 });
