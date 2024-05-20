@@ -77,6 +77,7 @@ function tie(){
     return false;
 }
 
+
 // Add event listener for canvas clicks
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -84,15 +85,17 @@ canvas.addEventListener('click', (e) => {
     const y = e.clientY - rect.top;
 
     buttons.forEach(button => {
-        if (isInsideButton(x, y, button)) {   
-            if(player == 1 && button.text === ''){
-                button.text = 'x';
-                player = 2;
-            }    
-            
-            if(player == 2 && button.text === ''){
-                button.text = 'o'
-                player = 1;
+        if (isInsideButton(x, y, button)) { 
+            if(verify() === false){  
+                if(player == 1 && button.text === ''){
+                    button.text = 'x';
+                    player = 2;
+                }    
+                
+                if(player == 2 && button.text === ''){
+                    button.text = 'o'
+                    player = 1;
+                }
             }
         }
         gameWon.textContent = 'Player ' + player + '\'s turn';
@@ -101,6 +104,7 @@ canvas.addEventListener('click', (e) => {
     });
     if(verify()){
         gameWon.style.left = '625px';
+        // Add event listener to disable all buttons
         if(player === 2){
             gameWon.textContent = 'Player 1 won! Please reload page to play again.';
         } else {
