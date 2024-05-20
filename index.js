@@ -6,7 +6,7 @@ let buttons = [];
 let player = 1;
 for(let i = 0; i < 3; i++){
     for(let j = 0; j < 3; j++){
-        buttons[i*3 + j] = {x: j*150, y: i*150, width: 150, height: 150, color: 'blue', text: ''}
+        buttons[i*3 + j] = {x: j*150, y: i*150, width: 150, height: 150, color: 'blue', text: '', enabled: true}
     }
 }
 
@@ -85,17 +85,15 @@ canvas.addEventListener('click', (e) => {
     const y = e.clientY - rect.top;
 
     buttons.forEach(button => {
-        if (isInsideButton(x, y, button)) { 
-            if(verify() === false){  
-                if(player == 1 && button.text === ''){
-                    button.text = 'x';
-                    player = 2;
-                }    
-                
-                if(player == 2 && button.text === ''){
-                    button.text = 'o'
-                    player = 1;
-                }
+        if (isInsideButton(x, y, button) && button.enabled) {   
+            if(player == 1 && button.text === ''){
+                button.text = 'x';
+                player = 2;
+            }    
+            
+            if(player == 2 && button.text === ''){
+                button.text = 'o'
+                player = 1;
             }
         }
         gameWon.textContent = 'Player ' + player + '\'s turn';
@@ -104,7 +102,10 @@ canvas.addEventListener('click', (e) => {
     });
     if(verify()){
         gameWon.style.left = '625px';
-        // Add event listener to disable all buttons
+        for(let i = 0; i < 9; i++){
+            buttons[i].enabled = false;
+        }
+
         if(player === 2){
             gameWon.textContent = 'Player 1 won! Please reload page to play again.';
         } else {
